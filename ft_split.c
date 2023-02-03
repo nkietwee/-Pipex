@@ -6,11 +6,11 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:04:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/01/31 20:14:53 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/03 17:07:31 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex.h"
 
 static size_t ft_countword(char const *s, char c)
 {

@@ -6,11 +6,12 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:09:39 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/01/31 20:12:25 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/03 17:08:31 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+
+#include "pipex.h"
 
 size_t ft_strlen(char *str)
 {

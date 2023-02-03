@@ -6,11 +6,11 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:10:11 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/01/31 20:12:20 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/03 17:09:04 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex.h"
 
 char	check(char const s1, char const *set)
 {
