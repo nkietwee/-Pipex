@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:53:23 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/04 23:11:36 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/05 03:50:46 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,20 @@ void ft_execve(char **path,char **cmd, char **envp)
 	char	*findpath = NULL;
 
 	i = 0;
-	if (access(cmd[0] , F_OK) != -1)
+	if (access(cmd[0] , F_OK) == 0)
 	{
 		if (execve(cmd[0], cmd , envp) == -1)
 			exit(errno);
 	}
+	else //(access(cmd[0] , F_OK) != -1 ) protect / 
+	{
+		puts("yguhijokplpd");
+		ft_putstr_fd("zsh: no such file or directory: " , STDERR_FILENO);
+		ft_putstr_fd(cmd[0] , STDERR_FILENO);
+		ft_putstr_fd("\n" , STDERR_FILENO);
+		exit (127);
+	}
+
 	while(path[i] != NULL) // keep path with cmd1
 	{
 		findpath = ft_strjoin(path[i] , cmd[0]);
@@ -41,10 +50,11 @@ void ft_execve(char **path,char **cmd, char **envp)
 		}
 		i++;
 	}
-	if (path[i] == NULL)
+	if (path[i] == NULL) // case not found command
 	{
 		ft_putstr_fd("zsh: command not found: " , STDERR_FILENO);
 		ft_putstr_fd(cmd[0] , STDERR_FILENO);
+		ft_putstr_fd("\n" , STDERR_FILENO);
 		exit (127);
 	}
 }
@@ -59,6 +69,9 @@ void		ft_createparent(int fd_pipe[], char **argv , char **path, char **envp)
 	fd_outfile = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC , 0777); // 0644  This mode gives read and write permissions to the owner of the file and read permissions to everyone else.
 	if  (fd_outfile < 1)
 	{
+		ft_putstr_fd("zsh: no such file or directory: " , STDERR_FILENO);
+		ft_putstr_fd(argv[4] , STDERR_FILENO);
+		ft_putstr_fd("\n" , STDERR_FILENO);
 		// printf("Can't open outfile");
 		exit(2);
 	}
@@ -82,12 +95,17 @@ void		ft_createchild(int fd_pipe[], char **argv , char **path, char **envp)
 
 	test = 0;
 	close(fd_pipe[0]);
+	cmd1 = ft_split(argv[2] ,' '); // protect cmd1 > 2 ex "ls -l a"
 	fd_infile = open(argv[1] ,O_RDONLY); // argv[1] = infile
 	if (fd_infile < 0)
 	{
-		// printf("Can't not open file ");
+		// puts("12134354567rte");
+		ft_putstr_fd("zsh: no such file or directory: " , STDERR_FILENO);
+		ft_putstr_fd(argv[1] , STDERR_FILENO);
+		ft_putstr_fd("\n" , STDERR_FILENO);
 		exit(0);
 	}
+	// fd move pointer right?
 	dup2(fd_infile, STDIN_FILENO); // change point from STDIN_FILENO to fd_infle(fd == 0)
 	dup2(fd_pipe[1], STDOUT_FILENO); // change write from STDOUT_FILENO to fd_pipe[1] becaz it can pass value accross function
 
@@ -95,11 +113,6 @@ void		ft_createchild(int fd_pipe[], char **argv , char **path, char **envp)
 	close(fd_pipe[1]);
 
 	// write(1, "sadfgsdfghj", 8); // error ==> outfile ,why use fd = 1 it is pipe
-	cmd1 = ft_split(argv[2] ,' '); // protect cmd1 > 2 ex "ls -l a"
-	// while(cmd1[test])
-	// {
-	// 	printf("%s" ,cmd1[test++]);
-	// }
 	i = 0;
 	ft_execve(path, cmd1, envp);
 
@@ -120,7 +133,6 @@ char	**ft_findpath(char **envp)
 		i++;
 	}
 	path = ft_split((envp[i] + 5), ':'); //cut PATH
-	// path = ft_split(ft_strtrim(envp[i],"PATH="), ':'); //cut PATH
 	i = 0;
 	while (path[i])
 	{
@@ -140,17 +152,22 @@ int main(int argc, char **argv, char **envp)
 	int	id;
 
 	if (argc != 5)
+	{
+		// ft_putstr_fd("zsh: no such file or directory: " , STDOUT_FILENO);
+		// ft_putstr_fd(argv[1] , STDOUT_FILENO);
+		// ft_putstr_fd("\n" , STDOUT_FILENO);
 		exit(1);
+	}
 	path = ft_findpath(envp);
 	if (pipe(fd_pipe) == -1) // protect pipe
 	{
-		printf("ERROR PIPE");
+		ft_putstr_fd("ERROR PIPE", STDOUT_FILENO);
 		return(errno);
 	}
 	id = fork();
 	if (id == -1) // for parent process
 	{
-		printf("ERROR FORK");
+		ft_putstr_fd("ERROR FORK", STDOUT_FILENO);
 		return(errno);
 	}
 	// if (id > 0) // wait children process finish
