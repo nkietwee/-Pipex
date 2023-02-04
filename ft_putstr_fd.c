@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 20:09:39 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/04 22:28:00 by nkietwee         ###   ########.fr       */
+/*   Created: 2023/02/04 14:05:44 by nkietwee          #+#    #+#             */
+/*   Updated: 2023/02/04 14:12:08 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "pipex.h"
 
-size_t ft_strlen(char *str)
+void	ft_putstr_fd(char *s, int fd)
 {
-	size_t i;
+	int	i;
 
 	i = 0;
-	if (!str)
-		return (0);
-	while(str[i])
+	if (!s)
+		return ;
+	while(s[i])
+	{
+		write(fd, &s[i], 1);
 		i++;
-	return(i);
+	}
 }
+/*
+int	main(int argc, char **argv)
+{
+	(void)argc;
+	int	i;
+
+	i = 0;
+	ft_putstr_fd ("zsh: command not found: ", STDOUT_FILENO);
+	ft_putstr_fd (argv[2], STDOUT_FILENO);
+
+
+}*/
