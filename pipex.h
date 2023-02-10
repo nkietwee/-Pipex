@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 23:15:33 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/04 21:32:35 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/10 23:56:32 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 void		ft_createparent(int fd_pipe[], char **argv , char **path, char **envp);
 void		ft_createchild(int fd_pipe[], char **argv , char **path, char **envp);
 char	**ft_findpath(char **envp);
+void ft_execve_cmd(char **path, char **cmd, char **envp);
+// void ft_execve_path(char **cmd, char **envp);
+void ft_execve_path(char **path, char **cmd, char **envp);
+
 
 
 //libft
@@ -36,5 +40,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
 void	ft_putstr_fd(char *s, int fd);
+int		ft_find_substring(char *haystack, char *needle);
 
 #endif

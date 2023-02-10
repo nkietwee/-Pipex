@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:08:51 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/04 23:11:49 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/06 20:25:29 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 // {
 // 	// char *name;
 
-// 	printf("%s" , ft_strjoin("name11111", "name"));
+// 	printf("%s" , ft_strjoin("e11111", "name"));
 // }

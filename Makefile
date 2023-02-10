@@ -6,7 +6,7 @@
 #    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/03 16:25:18 by nkietwee          #+#    #+#              #
-#    Updated: 2023/02/04 14:13:20 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/02/06 18:43:46 by nkietwee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRCS	= ft_pipex.c\
 		ft_strjoin.c\
 		ft_strlen.c\
 		ft_strtrim.c\
-		ft_putstr_fd.c
+		ft_putstr_fd.c\
+		ft_find_substring.c
 
 CC = cc -Wall -Wextra -Werror
 OBJS	= $(SRCS:.c=.o)
