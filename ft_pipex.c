@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:53:23 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/10 23:45:07 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/11 13:25:54 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 // #include <errno.h>
 #include <sys/errno.h>
 #include <fcntl.h>
+
 #include "pipex.h"
 
 void ft_execve_cmd(char **path, char **cmd, char **envp)
@@ -84,6 +85,7 @@ void ft_createparent(int fd_pipe[], char **argv, char **path, char **envp)
 	fd_outfile = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0777); // 0644  This mode gives read and write permissions to the owner of the file and read permissions to everyone else.
 	if (fd_outfile < 1)
 	{
+		ft_sleep(10000000);
 		ft_putstr_fd("zsh: no such file or directory: ", STDERR_FILENO);
 		ft_putstr_fd(argv[4], STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
@@ -143,6 +145,7 @@ void ft_createchild(int fd_pipe[], char **argv, char **path, char **envp)
 	// checkmode = ft_strjoin("/", cmd1[0]);
 	// write(2, cmd1[0], 10);
 	// dprintf(2, "cmd = %s =\n" ,cmd1[0]);
+	// ft_sleep(1000000);
 	if (ft_find_substring(cmd1[0] , "/") == 1) //path
 	{
 		// write(2, "child==found\n", 13);
@@ -189,6 +192,8 @@ int main(int argc, char **argv, char **envp)
 	/* ft_pipe[0] = read;
 		ft_pipe[1] = write;	*/
 	int id;
+	// int id1;
+	// int id2;
 
 	if (argc != 5)
 	{
@@ -202,6 +207,12 @@ int main(int argc, char **argv, char **envp)
 		return (errno);
 	}
 	id = fork();
+	// id1 = fork();
+	// id2 = fork();
+	// printf("id1 : %d, id2 : %d\n" ,id1 ,id2);
+	// printf("id2 : %d\n" ,id2);
+	// exit(0);
+	// if (id1 == -1 || id2 == -1) // for parent process
 	if (id == -1) // for parent process
 	{
 		ft_putstr_fd("ERROR FORK", STDOUT_FILENO);
@@ -213,6 +224,7 @@ int main(int argc, char **argv, char **envp)
 	{
 		ft_createchild(fd_pipe, argv, path, envp);
 		// ft_putstr_fd("command not found" , STDOUT_FILENO);
+		// ft_sleep(10000000);
 	}
 	ft_createparent(fd_pipe, argv, path, envp);
 	wait(NULL); // wait child parent or parent process that finish first (in case sleep)

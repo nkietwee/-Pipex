@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 23:15:33 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/10 23:56:32 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/11 13:14:09 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	**ft_findpath(char **envp);
 void ft_execve_cmd(char **path, char **cmd, char **envp);
 // void ft_execve_path(char **cmd, char **envp);
 void ft_execve_path(char **path, char **cmd, char **envp);
+void	ft_sleep(int n);
 
 
 
