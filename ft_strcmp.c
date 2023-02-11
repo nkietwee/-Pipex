@@ -28,9 +28,9 @@ int	ft_strcmp(char *s1, char s2)
 
 }
 
-#include<stdio.h>
-int	main(void)
-{
-	printf("%d" ,ft_strcmp(" \\bin" , '\\'));
+// #include<stdio.h>
+// int	main(void)
+// {
+// 	printf("%d" ,ft_strcmp(" /bin" , '/'));
 
-}
+// }

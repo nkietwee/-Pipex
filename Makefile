@@ -6,7 +6,7 @@
 #    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/03 16:25:18 by nkietwee          #+#    #+#              #
-#    Updated: 2023/02/11 13:12:22 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/02/11 20:32:37 by nkietwee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS	= ft_pipex.c\
 		ft_strlen.c\
 		ft_strtrim.c\
 		ft_putstr_fd.c\
-		ft_find_substring.c
+		ft_strcmp.c
 
 
 CC = cc -Wall -Wextra -Werror
