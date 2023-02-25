@@ -20,12 +20,13 @@ void ft_createparent(int fd_pipe[], char **argv, char **path, char **env)
 	fd_outfile = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0777); // 0644  This mode gives read and write permissions to the owner of the file and read permissions to everyone else.
 	if (fd_outfile < 1)
 	{
-		ft_sleep(10000000);
+		// ft_sleep(10000000);
 		ft_error(5, argv[4],NULL);
 		// ft_putstr_fd("zsh: no such file or directory: ", STDERR_FILENO);
 		// ft_putstr_fd(argv[4], STDERR_FILENO);
 		// ft_putstr_fd("\n", STDERR_FILENO);
-		exit(2);
+		// exit(errno);
+		exit(1);
 	}
 	close(fd_pipe[1]);
 	dup2(fd_pipe[0], STDIN_FILENO);
@@ -37,8 +38,10 @@ void ft_createparent(int fd_pipe[], char **argv, char **path, char **env)
 	if (ft_strcmp(cmd2[0] , '/') == 1) //path
 		ft_execve_path(cmd2, env);
 	else if (ft_strcmp(cmd2[0] , '/') == 0)
+	{
+		// dprintf(2, "Hello from parent\n" );
 		ft_execve_cmd(path, cmd2, env);
-
+	}
 	// if (ft_find_substring(cmd2[0] , "/") == 1) // found /
 	// 	ft_execve_path(cmd2, env); // move into function ft_find_substr
 	// else if (ft_find_substring(cmd2[0] , "/") != 1)
@@ -53,13 +56,14 @@ void ft_createchild(int fd_pipe[], char **argv, char **path, char **env)
 	close(fd_pipe[0]);
 	cmd1 = ft_split(argv[2], ' ');// protect cmd1 > 2 ex "ls -l a"
 	fd_infile = open(argv[1], O_RDONLY); // argv[1] = infile
-	if (fd_infile < 0)
+	if (fd_infile < 1)
 	{
 		ft_error(5, argv[1], NULL);
 		// ft_putstr_fd("zsh: no such file or directory: ", STDERR_FILENO);
 		// ft_putstr_fd(argv[1], STDERR_FILENO);
 		// ft_putstr_fd("\n", STDERR_FILENO);
-		exit(0);
+		exit(errno); // //
+		// exit(127); // //
 	}
 	// fd move pointer right?
 	dup2(fd_infile, STDIN_FILENO);   // change point from STDIN_FILENO to fd_infle(fd == 0)
@@ -100,10 +104,10 @@ char **ft_findpath(char **envp)
 
 int main(int argc, char **argv, char **env)
 {
-	(void)argc;
 	char **path;
 	int fd_pipe[2];
-	int id;
+	int id1;
+	int id2;
 
 	if (argc != 5)
 	{
@@ -118,16 +122,36 @@ int main(int argc, char **argv, char **env)
 		// ft_putstr_fd("Cannot create pipe or check your capacity", STDOUT_FILENO);
 		exit (errno);
 	}
-	id = fork();
-	if (id == -1) // for parent process
+	id1 = fork();
+	if (id1 == -1) // for parent process
 	{
 		ft_error(3, NULL, NULL);
 		// ft_putstr_fd("Cannot create fork or check your capacity", STDOUT_FILENO);
 		exit (errno);
 	}
-	if (id == 0) //for children process
+	if (id1 == 0) //for children process
 		ft_createchild(fd_pipe, argv, path, env);
-	ft_createparent(fd_pipe, argv, path, env);
-	wait(NULL); // wait child parent or parent process that finish first (in case sleep)
-	return (0);
+	// waitpid(id ,NULL , 0);
+
+	id2 = fork();
+	if (id2 == -1)
+	{
+		ft_error(3, NULL, NULL);
+		// ft_putstr_fd("Cannot create fork or check your capacity", STDOUT_FILENO);
+		exit (errno);
+	}
+	if (id2 == 0)
+		ft_createparent(fd_pipe, argv, path, env); // child
+	close(fd_pipe[0]);
+	close(fd_pipe[1]);
+	int status;
+	// dprintf(2, "Hedfsdfllo\n" );
+	waitpid(id1 ,NULL , 0); //wait first
+	// waitpid(id2 ,NULL , 0); //wait first
+	waitpid(id2 , &status, 0); //status keep value for exit (id2)
+	// dprintf(2, "status = %d\n" , status);
+
+	// wait(NULL); // wait child parent or parent process that finish first (in case sleep)
+	return (WEXITSTATUS(status));
+	//return(0);
 }

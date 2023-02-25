@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 13:12:35 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/11 20:29:56 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/25 23:14:08 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,17 @@ void ft_execve_cmd(char **path, char **cmd, char **env)
 {
 	int i;
 	char *findpath = NULL;
-
+	(void)env;
 	i = 0;
 	while (path[i] != NULL) // keep path with cmd1
 	{
 		findpath = ft_strjoin(path[i], cmd[0]);
 		if (access(findpath, F_OK) == 0) // if find == 0
 		{
+			// if (execve(findpath, cmd, env) == -1)
 			if (execve(findpath, cmd, env) == -1)
 				exit(errno);
+			// dprintf(2, "Hellocmd\n" );
 		}
 		i++;
 	}
@@ -46,8 +48,10 @@ void ft_execve_path(char **cmd, char **env) // path don't use
 	int i;
 
 	i = 0;
+	(void)env;
 	if (access(cmd[0], F_OK) == 0) // found
 	{
+		// if (execve(cmd[0], cmd, env) == -1)
 		if (execve(cmd[0], cmd, env) == -1)
 			exit(errno);
 	}
@@ -98,55 +102,3 @@ void ft_error(int mode,char *argv, char *cmd)
 		ft_putstr_fd("\n", STDERR_FILENO);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-// void ft_error(char mode[],char *argv, char *cmd)
-// {
-// 	(void)argv;
-// 	if (mode == "cfa")
-// 	{
-// 		ft_putstr_fd("plz check your argument" ,STDOUT_FILENO);
-// 		// exit(1);
-// 	}
-// 	else if (mode == "ncp")
-// 	{
-// 		ft_putstr_fd("Cannot create pipe or check your capacity", STDOUT_FILENO);
-// 		// return (errno);
-// 	}
-// 	else if (mode == "ncf")
-// 	{
-// 		ft_putstr_fd("Cannot create fork or check your capacity", STDOUT_FILENO);
-// 		// return (errno);
-// 	}
-// 	else if (mode == "cnf")
-// 	{
-// 		ft_putstr_fd("zsh: no such file or directory: ", STDERR_FILENO);
-// 		ft_putstr_fd(cmd, STDERR_FILENO);
-// 		ft_putstr_fd("\n", STDERR_FILENO);
-// 		// exit(0);
-// 	}
-// 	else if (mode == "cnff")
-// 	{
-// 		ft_putstr_fd("zsh: no such file or directory: ", STDERR_FILENO);
-// 		ft_putstr_fd(argv, STDERR_FILENO);
-// 		ft_putstr_fd("\n", STDERR_FILENO);
-// 		// exit(0);
-// 	}
-// 	else if (mode == "cnfff")
-// 	{
-// 		ft_putstr_fd("zsh: command not found: ", STDERR_FILENO);
-// 		ft_putstr_fd(cmd, STDERR_FILENO);
-// 		ft_putstr_fd("\n", STDERR_FILENO);
-// 	}
-// }
-
-
