@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:04:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/03 17:07:31 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/26 15:40:06 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static char *ft_printword(char const *s, char c, size_t *start)
 	while (s[*start + len] != '\0' && s[*start + len] != c)
 		len++;
 	res = (char *)malloc(sizeof(char) * (len + 1));
+	if (!res)
+		return(NULL);
 	while (i < len)
 	{
 		res[i] = s[*start + i];

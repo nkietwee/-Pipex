@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-void ft_createparent(int fd_pipe[], char **argv, char **path, char **env)
+void ft_createchild2(int fd_pipe[], char **argv, char **path, char **env)
 {
 	int fd_outfile;
 	char **cmd2;
@@ -22,49 +22,36 @@ void ft_createparent(int fd_pipe[], char **argv, char **path, char **env)
 	{
 		// ft_sleep(10000000);
 		ft_error(5, argv[4],NULL);
-		// ft_putstr_fd("zsh: no such file or directory: ", STDERR_FILENO);
-		// ft_putstr_fd(argv[4], STDERR_FILENO);
-		// ft_putstr_fd("\n", STDERR_FILENO);
 		// exit(errno);
 		exit(1);
 	}
 	close(fd_pipe[1]);
 	dup2(fd_pipe[0], STDIN_FILENO);
 	dup2(fd_outfile, STDOUT_FILENO);
-	// write(1, "sadfgsdfghj---", 15); // error ==> outfile
 	close(fd_outfile);
 	close(fd_pipe[0]);
 	cmd2 = ft_split(argv[3], ' ');
 	if (ft_strcmp(cmd2[0] , '/') == 1) //path
 		ft_execve_path(cmd2, env);
 	else if (ft_strcmp(cmd2[0] , '/') == 0)
-	{
-		// dprintf(2, "Hello from parent\n" );
 		ft_execve_cmd(path, cmd2, env);
-	}
-	// if (ft_find_substring(cmd2[0] , "/") == 1) // found /
-	// 	ft_execve_path(cmd2, env); // move into function ft_find_substr
-	// else if (ft_find_substring(cmd2[0] , "/") != 1)
-	// 	ft_execve_cmd(path, cmd2, env);
 }
 
-void ft_createchild(int fd_pipe[], char **argv, char **path, char **env)
+void ft_createchild1(int fd_pipe[], char **argv, char **path, char **env)
 {
 	int fd_infile;
 	char **cmd1;
 
 	close(fd_pipe[0]);
-	cmd1 = ft_split(argv[2], ' ');// protect cmd1 > 2 ex "ls -l a"
 	fd_infile = open(argv[1], O_RDONLY); // argv[1] = infile
 	if (fd_infile < 1)
 	{
+		ft_freefree(path);
 		ft_error(5, argv[1], NULL);
-		// ft_putstr_fd("zsh: no such file or directory: ", STDERR_FILENO);
-		// ft_putstr_fd(argv[1], STDERR_FILENO);
-		// ft_putstr_fd("\n", STDERR_FILENO);
-		exit(errno); // //
+		exit(errno);
 		// exit(127); // //
 	}
+	cmd1 = ft_split(argv[2], ' ');// protect cmd1 > 2 ex "ls -l a"
 	// fd move pointer right?
 	dup2(fd_infile, STDIN_FILENO);   // change point from STDIN_FILENO to fd_infle(fd == 0)
 	dup2(fd_pipe[1], STDOUT_FILENO); // change write from STDOUT_FILENO to fd_pipe[1] becaz it can pass value accross function
@@ -74,10 +61,6 @@ void ft_createchild(int fd_pipe[], char **argv, char **path, char **env)
 		ft_execve_path(cmd1, env);
 	else if (ft_strcmp(cmd1[0] , '/') == 0)
 		ft_execve_cmd(path, cmd1, env);
-	// if (ft_find_substring(cmd1[0] , "/") == 1) //path
-	// 	ft_execve_path(cmd1, envp);
-	// else if (ft_find_substring(cmd1[0] , "/") == 0)
-	// 	ft_execve_cmd(path, cmd1, envp);
 }
 
 char **ft_findpath(char **envp)
@@ -96,7 +79,8 @@ char **ft_findpath(char **envp)
 	i = 0;
 	while (path[i])
 	{
-		path[i] = ft_strjoin(path[i], "/"); //for find path
+		path[i] = ft_strjoin_free(path[i], "/"); //for find path and free first argument
+		// free(path[i]);
 		i++;
 	}
 	return (path);
@@ -112,46 +96,38 @@ int main(int argc, char **argv, char **env)
 	if (argc != 5)
 	{
 		ft_error(1, NULL, NULL);
-		// ft_putstr_fd("plz check your argument" ,STDOUT_FILENO);
 		exit(1);
 	}
 	path = ft_findpath(env);
 	if (pipe(fd_pipe) == -1) // protect pipe
 	{
 		ft_error(2, NULL, NULL);
-		// ft_putstr_fd("Cannot create pipe or check your capacity", STDOUT_FILENO);
 		exit (errno);
 	}
 	id1 = fork();
 	if (id1 == -1) // for parent process
 	{
 		ft_error(3, NULL, NULL);
-		// ft_putstr_fd("Cannot create fork or check your capacity", STDOUT_FILENO);
 		exit (errno);
 	}
 	if (id1 == 0) //for children process
-		ft_createchild(fd_pipe, argv, path, env);
-	// waitpid(id ,NULL , 0);
-
+		ft_createchild1(fd_pipe, argv, path, env);
 	id2 = fork();
 	if (id2 == -1)
 	{
 		ft_error(3, NULL, NULL);
-		// ft_putstr_fd("Cannot create fork or check your capacity", STDOUT_FILENO);
 		exit (errno);
 	}
 	if (id2 == 0)
-		ft_createparent(fd_pipe, argv, path, env); // child
+		ft_createchild2(fd_pipe, argv, path, env); // child
 	close(fd_pipe[0]);
 	close(fd_pipe[1]);
 	int status;
-	// dprintf(2, "Hedfsdfllo\n" );
 	waitpid(id1 ,NULL , 0); //wait first
 	// waitpid(id2 ,NULL , 0); //wait first
 	waitpid(id2 , &status, 0); //status keep value for exit (id2)
-	// dprintf(2, "status = %d\n" , status);
 
 	// wait(NULL); // wait child parent or parent process that finish first (in case sleep)
+	//return(0); if you don't use WEXITSTATUS(status)
 	return (WEXITSTATUS(status));
-	//return(0);
 }

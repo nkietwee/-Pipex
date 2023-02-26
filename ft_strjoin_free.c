@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:08:51 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/26 16:12:38 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/26 16:55:57 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
 	char	*size;
 	int		i;
@@ -37,7 +37,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	size[i] = '\0';
-	// free(s1);
+	free(s1);
 	return (size);
 }
 

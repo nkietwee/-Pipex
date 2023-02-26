@@ -6,7 +6,7 @@
 #    By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/03 16:25:18 by nkietwee          #+#    #+#              #
-#    Updated: 2023/02/11 20:32:37 by nkietwee         ###   ########.fr        #
+#    Updated: 2023/02/26 16:42:15 by nkietwee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ SRCS	= ft_pipex.c\
 		ft_pipex_util.c\
 		ft_split.c\
 		ft_strjoin.c\
+		ft_strjoin_free.c\
 		ft_strlen.c\
-		ft_strtrim.c\
 		ft_putstr_fd.c\
 		ft_strcmp.c
 
