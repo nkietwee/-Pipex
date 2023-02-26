@@ -6,16 +6,16 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:04:26 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/26 15:40:06 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/27 02:19:12 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static size_t ft_countword(char const *s, char c)
+static size_t	ft_countword(char const *s, char c)
 {
-	size_t i;
-	size_t count;
+	size_t	i;
+	size_t	count;
 
 	i = 0;
 	count = 0;
@@ -33,11 +33,11 @@ static size_t ft_countword(char const *s, char c)
 	return (count);
 }
 
-static char *ft_printword(char const *s, char c, size_t *start)
+static char	*ft_printword(char const *s, char c, size_t *start)
 {
-	size_t i;
-	size_t len;
-	char *res;
+	size_t	i;
+	size_t	len;
+	char	*res;
 
 	i = 0;
 	len = 0;
@@ -47,7 +47,7 @@ static char *ft_printword(char const *s, char c, size_t *start)
 		len++;
 	res = (char *)malloc(sizeof(char) * (len + 1));
 	if (!res)
-		return(NULL);
+		return (NULL);
 	while (i < len)
 	{
 		res[i] = s[*start + i];
@@ -58,12 +58,12 @@ static char *ft_printword(char const *s, char c, size_t *start)
 	return (res);
 }
 
-char **ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
-	size_t i;
-	size_t start;
-	size_t count;
-	char **ans;
+	size_t	i;
+	size_t	start;
+	size_t	count;
+	char	**ans;
 
 	i = 0;
 	start = 0;

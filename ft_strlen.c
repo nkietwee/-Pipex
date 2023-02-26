@@ -6,21 +6,20 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:09:39 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/04 22:28:00 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/27 02:20:07 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "pipex.h"
 
-size_t ft_strlen(char *str)
+size_t	ft_strlen(char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (!str)
 		return (0);
-	while(str[i])
+	while (str[i])
 		i++;
-	return(i);
+	return (i);
 }
