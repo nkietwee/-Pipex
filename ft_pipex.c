@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:53:23 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/27 02:15:28 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:11:24 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,48 +108,3 @@ int	main(int argc, char **argv, char **env)
 	waitpid(px.id2, &px.status, 0);
 	return (WEXITSTATUS(px.status));
 }
-
-/*
-int	main(int argc, char **argv, char **env)
-{
-	char	**path;
-	int		fd_pipe[2];
-	int		id1;
-	int		id2;
-	int		status;
-
-	if (argc != 5)
-	{
-		ft_error(1, NULL, NULL);
-		exit(1);
-	}
-	path = ft_findpath(env);
-	if (pipe(fd_pipe) == -1)
-	{
-		ft_error(2, NULL, NULL);
-		exit (errno);
-	}
-	id1 = fork();
-	if (id1 == -1)
-	{
-		ft_error(3, NULL, NULL);
-		exit (errno);
-	}
-	if (id1 == 0)
-		ft_createchild1(fd_pipe, argv, path, env);
-	id2 = fork();
-	if (id2 == -1)
-	{
-		ft_error(3, NULL, NULL);
-		exit (errno);
-	}
-	if (id2 == 0)
-		ft_createchild2(fd_pipe, argv, path, env);
-	if (id2 != 0)
-		ft_freefree(path);
-	close(fd_pipe[0]);
-	close(fd_pipe[1]);
-	waitpid(id1, NULL, 0);
-	waitpid(id2, &status, 0);
-	return (WEXITSTATUS(status));
-}*/

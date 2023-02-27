@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 13:12:35 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/27 02:28:04 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/27 16:13:34 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,38 +40,6 @@ void	ft_execve_cmd(char **path, char **cmd, char **env)
 		ft_freefree(cmd);
 	}
 }
-
-/*
-void	ft_execve_cmd(char **path, char **cmd, char **env)
-{
-	int		i;
-	char	*findpath;
-
-	i = 0;
-	while (path[i] != NULL)
-	{
-		findpath = ft_strjoin(path[i], cmd[0]);
-		if (access(findpath, F_OK) == 0)
-		{
-			if (execve(findpath, cmd, env) == -1)
-			{
-				ft_freefree(path);
-				free(findpath);
-				ft_freefree(cmd);
-			}
-		}
-		free(findpath);
-		i++;
-	}
-	if (path[i] == NULL)
-	{
-		ft_error(6, NULL, cmd[0], 127);
-		ft_freefree(path);
-		ft_freefree(cmd);
-	}
-	ft_freefree(path);
-}
-*/
 
 void	ft_execve_path(char **cmd, char **env)
 {

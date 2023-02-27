@@ -6,7 +6,7 @@
 /*   By: nkietwee <nkietwee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 20:08:51 by nkietwee          #+#    #+#             */
-/*   Updated: 2023/02/26 16:55:57 by nkietwee         ###   ########.fr       */
+/*   Updated: 2023/02/27 20:28:42 by nkietwee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,3 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	free(s1);
 	return (size);
 }
-
-// #include<stdio.h>
-// int	main(void)
-// {
-// 	// char *name;
-
-// 	printf("%s\n" , ft_strjoin("e11111", "name"));
-// }
